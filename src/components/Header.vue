@@ -8,8 +8,8 @@
             <p>尚品汇欢迎您！</p>
             <p>
               <span>请</span>
-              <a href="###">登录</a>
-              <a href="###" class="register">免费注册</a>
+              <a href="###" @click="ToLogin">登录</a>
+              <a href="###" class="register" @click="ToRegister">免费注册</a>
             </p>
           </div>
           <div class="typeList">
@@ -27,9 +27,9 @@
       <!--头部第二行 搜索区域-->
       <div class="bottom">
         <h1 class="logoArea">
-          <a class="logo" title="尚品汇" href="###" target="_blank">
-            <img src="@/assets/images/logo.png" alt="" />
-          </a>
+          <span class="logo" title="尚品汇" target="_blank">
+            <img src="@/assets/images/logo.png" alt="" @click="ToHome" />
+          </span>
         </h1>
         <div class="searchArea">
           <form action="###" class="searchForm">
@@ -37,8 +37,13 @@
               type="text"
               id="autocomplete"
               class="input-error input-xxlarge"
+              v-model="keyword"
             />
-            <button class="sui-btn btn-xlarge btn-danger" type="button">
+            <button
+              class="sui-btn btn-xlarge btn-danger"
+              type="button"
+              @click="ToSearch"
+            >
               搜索
             </button>
           </form>
@@ -51,6 +56,41 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      keyword: "",
+    };
+  },
+  methods: {
+    ToRegister() {
+      this.$router.push("/register", () => {});
+    },
+    ToLogin() {
+      this.$router.push("/login", () => {});
+    },
+    ToSearch() {
+      //路由传参
+      //第一种字符串式
+      // this.$router.push(
+      //   "/search/" + this.keyword + "?k=" + this.keyword.toUpperCase(),
+      //   () => {}
+      // );
+      //第二种模板字符串
+      // this.$router.push(
+      //   `/search/${this.keyword}?k=${this.keyword.toUpperCase()}`,
+      //   () => {}
+      // );
+      //第三种对象写法
+      this.$router.push({
+        name: "search",
+        params: { keyword: this.keyword },
+        query: { k: this.keyword.toUpperCase() },
+      });
+    },
+    ToHome() {
+      this.$router.push("/home", () => {});
+    },
+  },
 };
 </script>
 
@@ -97,6 +137,7 @@ export default {
 .outer .header > .bottom .logoArea .logo img {
   width: 175px;
   margin: 25px 45px;
+  cursor: pointer;
 }
 .outer .header > .bottom .searchArea {
   float: right;

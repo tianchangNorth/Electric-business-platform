@@ -1,7 +1,9 @@
 <template>
   <div>
     <Header></Header>
-    <Footer></Footer>
+    <router-view></router-view>
+    <!-- 在home和search下是显示的，在登陆注册下是隐藏的   -->
+    <Footer v-show="$route.meta.show"></Footer>
   </div>
 </template>
 
